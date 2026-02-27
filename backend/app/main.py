@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.routes import router as api_router
 
 app = FastAPI()
 
@@ -8,6 +9,7 @@ origins = [
     "http://localhost:5173",
 ]
 
+# CORS Setup
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -16,6 +18,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+# Attach routers
+app.include_router(api_router)
